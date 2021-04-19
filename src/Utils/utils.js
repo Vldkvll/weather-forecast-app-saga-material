@@ -20,7 +20,8 @@ export function capitalizeString(string) {
 }
 
 export function isLetter(str) {
-    return str.length === 1 && str.match(/^[a-zA-Z]*$/i);
+    // debugger
+    return str.length >= 2 && str.match(/^[a-zA-Z]*$/i);
   }
 
 

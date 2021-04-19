@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ButtonAppBar() {
+export default function Navbar({setIsOpen}) {
     const classes = useStyles();
     const location = useLocation();
 
@@ -28,9 +28,9 @@ export default function ButtonAppBar() {
         <div className={classes.root}>
             <AppBar className={classes.bar} position="static">
                 <Toolbar>
-                    {location.pathname === "/weather" && (
-                        <Link to="/">
-                            <Brightness4SharpIcon />
+                    {location.pathname !== "/" && (
+                        <Link to="/" >
+                            <Brightness4SharpIcon onclick={() => setIsOpen(false)}/>
                         </Link>
                     )}
                     <Typography variant="h2" className={classes.title}>

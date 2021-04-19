@@ -10,9 +10,10 @@ function App() {
     return (
         <>
             <Router>
-                <Navbar />
+                
                 <Switch>
                     <Route path="/" exact component={MainContainer} />
+                    <Route path="/navbar"  component={Navbar} />
                     <Route path="/weather" component={MainCard} />
                 </Switch>
             </Router>
