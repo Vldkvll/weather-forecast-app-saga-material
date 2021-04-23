@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/weather-forecast-app-saga-material/static/css/main.7f7a421a.chunk.css",
-    "main.js": "/weather-forecast-app-saga-material/static/js/main.5457f1f3.chunk.js",
-    "main.js.map": "/weather-forecast-app-saga-material/static/js/main.5457f1f3.chunk.js.map",
+    "main.js": "/weather-forecast-app-saga-material/static/js/main.9dc67c83.chunk.js",
+    "main.js.map": "/weather-forecast-app-saga-material/static/js/main.9dc67c83.chunk.js.map",
     "runtime-main.js": "/weather-forecast-app-saga-material/static/js/runtime-main.5845e7cf.js",
     "runtime-main.js.map": "/weather-forecast-app-saga-material/static/js/runtime-main.5845e7cf.js.map",
-    "static/js/2.974df6df.chunk.js": "/weather-forecast-app-saga-material/static/js/2.974df6df.chunk.js",
-    "static/js/2.974df6df.chunk.js.map": "/weather-forecast-app-saga-material/static/js/2.974df6df.chunk.js.map",
+    "static/js/2.cf5469a8.chunk.js": "/weather-forecast-app-saga-material/static/js/2.cf5469a8.chunk.js",
+    "static/js/2.cf5469a8.chunk.js.map": "/weather-forecast-app-saga-material/static/js/2.cf5469a8.chunk.js.map",
     "index.html": "/weather-forecast-app-saga-material/index.html",
     "static/css/main.7f7a421a.chunk.css.map": "/weather-forecast-app-saga-material/static/css/main.7f7a421a.chunk.css.map",
-    "static/js/2.974df6df.chunk.js.LICENSE.txt": "/weather-forecast-app-saga-material/static/js/2.974df6df.chunk.js.LICENSE.txt"
+    "static/js/2.cf5469a8.chunk.js.LICENSE.txt": "/weather-forecast-app-saga-material/static/js/2.cf5469a8.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.5845e7cf.js",
-    "static/js/2.974df6df.chunk.js",
+    "static/js/2.cf5469a8.chunk.js",
     "static/css/main.7f7a421a.chunk.css",
-    "static/js/main.5457f1f3.chunk.js"
+    "static/js/main.9dc67c83.chunk.js"
   ]
 }
