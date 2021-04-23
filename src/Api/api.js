@@ -47,6 +47,11 @@ export const getWeatherForecastByCityName = async ({cityName, units}) => {
                 units,
                 cnt: 9,
             },
+            // headers: {
+            //     // 'Access-Control-Allow-Origin': '*',
+            //     // 'Content-Type': 'application/json',
+            //     // mode: 'no-cors',
+            //   }
         })
         .then((response) => response.data)
         .catch((error) => {
