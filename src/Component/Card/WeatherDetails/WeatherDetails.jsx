@@ -5,16 +5,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import { Grid } from "@material-ui/core";
 
-function WeatherDetails({ data }) {
-    const { description, icon, temp, windSpeed, windTransform } = data;
-
+function WeatherDetails({
+    data: { description, icon, temp, windSpeed, windTransform },
+}) {
     return (
         <div>
-            <Grid container
-            
-            justify="center"
-            alignItems="center"
-            >
+            <Grid container justify="center" alignItems="center">
                 {temp && <Typography variant="h6">{temp}&deg;C</Typography>}
                 {icon && (
                     <Tooltip

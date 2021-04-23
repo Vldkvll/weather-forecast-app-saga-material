@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Grid } from "@material-ui/core";
 import WeatherCard from "../Card/WeatherCard/WeatherCard";
-import MainCard from "../Card/MainCard/MainCard";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavoritesStart, fetchWeatherStart } from "../../Redux/actions/actionCreators";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
     container: {
@@ -19,22 +21,38 @@ function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
     // const mainlocation = weatherLocations[0];
     const classes = useStyles();
 
-    useEffect(() => {}, []);
+    const [weatherRefresh, setWeatherRefresh] = useState(false);
+    const [locationRefresh, setLocationRefresh] = useState('');
+    // const weatherData = useSelector((state) => state.weather.city);
+    const weatherDataArr = useSelector((state) => state.favorites.citiesData);
 
-    // useEffect(() => {
-    //     const getWeather = async () => {
-    //         const result = await getWeatherByCityId(locationId);
-    //         // debugger
-    //         if (result.success) {
-    //             // console.dir("(result.data");
-    //             setWeatherData(result.data);
-    //         } else {
-    //             isSuccess(onDelete)(false);
-    //         }
-    //     };
-    //     getWeather();
-    // }, [weatherRefresh]);
+    const dispatch = useDispatch();
+    // const onFetchCityWeather = useCallback(
+    //     (locationRefresh) => dispatch(fetchWeatherStart(locationRefresh)),
+    //     [dispatch]
+    // );
+    const onFetchCities = useCallback(
+        (weatherLocations) => dispatch(fetchFavoritesStart(weatherLocations)),
+        [dispatch]
+    );
 
+    useEffect(() => {
+        if (!locationRefresh) return;
+
+        dispatch(fetchWeatherStart(locationRefresh));
+    }, [locationRefresh, weatherRefresh, dispatch]);
+    
+    useEffect(() => {
+        if (weatherLocations.length === 0) return;
+
+        onFetchCities(weatherLocations);
+    }, [weatherLocations, onFetchCities]);
+
+    
+    const onRefresh = (location) => {
+        setWeatherRefresh((prev) => !prev);
+        setLocationRefresh(location)
+    };
 
     return (
         <Grid container className={classes.container}>
@@ -43,13 +61,15 @@ function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
                 
                 
 
-                {weatherLocations.map((location, index) => {
+                {weatherDataArr.map((item, index) => {
                     return (
-                        <Grid item key={location} xs={8} sm={6}>
+                        <Grid item key={item.cityKey} xs={8} sm={6}>
                             <WeatherCard
-                                location={location}
+                                location={item.cityKey}
                                 onDelete={removeLocation(index)}
                                 move={moveItemToFront}
+                                onRefresh={onRefresh}
+                                weatherData={item.data}
                         
                             />
                         </Grid>

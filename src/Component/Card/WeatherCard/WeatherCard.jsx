@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
@@ -7,11 +7,9 @@ import CardContent from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { getWeatherByCityName } from "../../../Api/api";
 import WeatherDetails from "../WeatherDetails/WeatherDetails";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import RefreshIcon from "@material-ui/icons/Refresh";
-import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -24,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: "100%",
     },
     grid: {
-        // padding: theme.spacing(1),
         margin: "0 0px 5px 5px",
     },
     deleteButton: {
@@ -32,44 +29,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const isSuccess = (onDelete) => (status) => {
-    // debugger
-    if (!status) {
-        alert(`This City ${onDelete} does not exist.`);
-    }
-    return onDelete;
-};
-
-const WeatherCard = ({ location, onDelete, move }) => {
+const WeatherCard = ({ location, onDelete, move, weatherData, onRefresh }) => {
     const classes = useStyles();
-
-    const [weatherData, setWeatherData] = useState({});
-    const [weatherRefresh, setWeatherRefresh] = useState(false);
-
-    useEffect(() => {
-        const getWeather = async () => {
-            const result = await getWeatherByCityName(location);
-            // debugger
-            // console.log("weatherRefresh");
-            // console.log("location");
-            // console.log(location);
-            if (result.success) {
-                // console.dir("(result.data");
-                setWeatherData(result.data);
-            } else {
-                isSuccess(onDelete)(false);
-            }
-        };
-        getWeather();
-    }, [location, onDelete, weatherRefresh]);
-
-    const onRefresh = () => {
-        setWeatherRefresh((prev) => !prev);
-        // console.log("onRefresh");
-        // console.log(onRefresh);
-    };
-
-    // setLocationId(weatherData.location)
+    const description = weatherData.description
 
     return (
         <>
@@ -80,9 +42,9 @@ const WeatherCard = ({ location, onDelete, move }) => {
                     justify="space-between"
                     alignItems="center"
                 >
-                    <ButtonBase onClick={move(location)} className="fullWidth">
+                    <ButtonBase onClick={move(location, description)} className="fullWidth">
                         <CardContent>
-                            {weatherData.temp ? (
+                            {weatherData ? (
                                 <>
                                     <Grid
                                         container
@@ -108,8 +70,9 @@ const WeatherCard = ({ location, onDelete, move }) => {
                                         <WeatherDetails data={weatherData} />
                                     </Grid>
                                 </>
-                            )
-                        : <CircularProgress />}
+                            ) : (
+                                <CircularProgress />
+                            )}
                         </CardContent>
                     </ButtonBase>
                 </Grid>
@@ -134,7 +97,7 @@ const WeatherCard = ({ location, onDelete, move }) => {
                     </Grid>
                     <Grid>
                         <IconButton
-                            onClick={onRefresh}
+                            onClick={() => onRefresh(location)}
                             className={classes.deleteButton}
                         >
                             <RefreshIcon />

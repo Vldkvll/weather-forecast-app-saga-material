@@ -30,7 +30,7 @@ export default function Navbar({setIsOpen}) {
                 <Toolbar>
                     {location.pathname !== "/" && (
                         <Link to="/" >
-                            <Brightness4SharpIcon onclick={() => setIsOpen(false)}/>
+                            <Brightness4SharpIcon />
                         </Link>
                     )}
                     <Typography variant="h2" className={classes.title}>
