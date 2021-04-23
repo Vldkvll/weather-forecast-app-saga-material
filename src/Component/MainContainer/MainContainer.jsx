@@ -32,7 +32,7 @@ function MainContainer() {
 
     const history = useHistory();
     const error = useSelector((state) => state.favorites.error);
-    const { dataS, setValues } = useData();
+    const { setValues } = useData();
     const [weatherLocations, setWeatherLocations] = useState(
         readFromLocalStorage
     );
