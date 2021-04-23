@@ -54,8 +54,9 @@ function MainContainer() {
                 "Request must contain only English characters. Enter your request correctly, please."
             );
             return;
-        } else if (weatherLocations.includes(location)) {
+        } else if (weatherLocations.includes(capitalizeString(location))) {
             alert("This location already exists.");
+            return
         } else {
             setWeatherLocations([
                 ...weatherLocations,
