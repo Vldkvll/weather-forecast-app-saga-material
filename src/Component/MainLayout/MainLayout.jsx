@@ -4,7 +4,6 @@ import WeatherCard from "../Card/WeatherCard/WeatherCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavoritesStart, fetchWeatherStart } from "../../Redux/actions/actionCreators";
-import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
     container: {
@@ -16,21 +15,18 @@ const useStyles = makeStyles({
 });
 
 function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
-   
-
-    // const mainlocation = weatherLocations[0];
     const classes = useStyles();
 
     const [weatherRefresh, setWeatherRefresh] = useState(false);
     const [locationRefresh, setLocationRefresh] = useState('');
-    // const weatherData = useSelector((state) => state.weather.city);
+    
     const weatherDataArr = useSelector((state) => state.favorites.citiesData);
 
     const dispatch = useDispatch();
-    // const onFetchCityWeather = useCallback(
-    //     (locationRefresh) => dispatch(fetchWeatherStart(locationRefresh)),
-    //     [dispatch]
-    // );
+    const onFetchCityWeather = useCallback(
+        (locationRefresh) => dispatch(fetchWeatherStart(locationRefresh)),
+        [dispatch]
+    );
     const onFetchCities = useCallback(
         (weatherLocations) => dispatch(fetchFavoritesStart(weatherLocations)),
         [dispatch]
@@ -38,9 +34,9 @@ function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
 
     useEffect(() => {
         if (!locationRefresh) return;
-
-        dispatch(fetchWeatherStart(locationRefresh));
-    }, [locationRefresh, weatherRefresh, dispatch]);
+        onFetchCityWeather(locationRefresh)
+        // dispatch(fetchWeatherStart(locationRefresh));
+    }, [locationRefresh, weatherRefresh, onFetchCityWeather]);
     
     useEffect(() => {
         if (weatherLocations.length === 0) return;
@@ -48,6 +44,7 @@ function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
         onFetchCities(weatherLocations);
     }, [weatherLocations, onFetchCities]);
 
+    
     
     const onRefresh = (location) => {
         setWeatherRefresh((prev) => !prev);
@@ -58,8 +55,6 @@ function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
         <Grid container className={classes.container}>
             <Grid item xs={false} sm={1} />
             <Grid item container sm={10} spacing={3}>
-                
-                
 
                 {weatherDataArr.map((item, index) => {
                     return (
@@ -69,8 +64,7 @@ function MainLayout({ weatherLocations, removeLocation, moveItemToFront }) {
                                 onDelete={removeLocation(index)}
                                 move={moveItemToFront}
                                 onRefresh={onRefresh}
-                                weatherData={item.data}
-                        
+                                weatherData={item.data}                      
                             />
                         </Grid>
                     );

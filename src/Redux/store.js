@@ -5,7 +5,7 @@ import {
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/rootReducer'
-import { watcherSagasCities, watcherSagasForecast, watchFavorites } from './saga/rootSaga';
+import { watcherSagasCities, watcherSagasError, watcherSagasForecast, watchFavorites } from './saga/rootSaga';
 
 
 const composeEnhancers = process.env.NODE_ENV === 'development'
@@ -21,3 +21,4 @@ export const store = createStore(rootReducer, composeEnhancers(
 sagaMiddleware.run(watchFavorites);
 sagaMiddleware.run(watcherSagasCities);
 sagaMiddleware.run(watcherSagasForecast);
+sagaMiddleware.run(watcherSagasError);

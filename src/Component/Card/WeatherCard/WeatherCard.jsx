@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const WeatherCard = ({ location, onDelete, move, weatherData, onRefresh }) => {
     const classes = useStyles();
-    const description = weatherData.description
-
+    const description = weatherData.description;
+    
     return (
         <>
             <Card className={classes.main}>
@@ -42,7 +42,10 @@ const WeatherCard = ({ location, onDelete, move, weatherData, onRefresh }) => {
                     justify="space-between"
                     alignItems="center"
                 >
-                    <ButtonBase onClick={move(location, description)} className="fullWidth">
+                    <ButtonBase
+                        onClick={move(location, description)}
+                        className="fullWidth"
+                    >
                         <CardContent>
                             {weatherData ? (
                                 <>
@@ -67,7 +70,9 @@ const WeatherCard = ({ location, onDelete, move, weatherData, onRefresh }) => {
 
                                         <Grid></Grid>
 
-                                        <WeatherDetails data={weatherData} />
+                                        <WeatherDetails
+                                        onDelete={onDelete}
+                                        data={weatherData} />
                                     </Grid>
                                 </>
                             ) : (

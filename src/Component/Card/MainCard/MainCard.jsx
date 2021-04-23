@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -16,8 +16,6 @@ import {
     YAxis,
     Tooltip,
     Legend,
-    linearGradient,
-    defs,
 } from "recharts";
 import { useData } from "../../../DataContext/DataContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,10 +23,6 @@ import { fetchWeatherEveryHoursStart } from "../../../Redux/actions/actionCreato
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // border:
-        // theme.palette.type === "dark"
-        //     ? "1px solid white"
-        //     : "1px solid rgba(0,0,0,.7)",
         borderRadius: "5px",
         backdropFilter: "blur(100px)",
     },
@@ -52,18 +46,9 @@ const MainCard = () => {
     const classes = useStyles();
     const { dataS, setValues } = useData();
     const data = useSelector((state) => state.forecast.weatherData);
-    console.log("weatherData MainCard");
-    console.log(data);
-    console.log("cityData MainCard");
-    console.log(dataS);
-  
     const location = dataS.location;
-    console.log("dataS.cityData.location MainCard");
-    console.log(location);
     const units = dataS.units;
-    const description = dataS.description
-    // console.log("locationUnits MainCard");
-    // console.log(units);
+    const description = dataS.description;
     const dispatch = useDispatch();
     const onFetchCityDetails = useCallback(
         (params) => dispatch(fetchWeatherEveryHoursStart(params)),
@@ -71,20 +56,20 @@ const MainCard = () => {
     );
 
     useEffect(() => {
-        if ( !location ) return;
+        if (!location) return;
         const cityName = location;
         onFetchCityDetails({ cityName, units });
     }, [location, onFetchCityDetails, units]);
-    const theme = ''
+    const theme = "";
 
     return (
         <>
-            {  (data === null) ? (
+            {data === null ? (
                 <CircularProgress />
             ) : (
                 <CSSTransition
                     appear
-                   in={data[0]}
+                    in={data[0]}
                     timeout={250}
                     classNames="fade"
                     unmountOnExit
@@ -106,11 +91,11 @@ const MainCard = () => {
                         </Typography>
                         <FormControlLabel
                             onChange={() => {
-                                // units === "metric"
-                                // ? setValues(dataS.cityData.units = "imperial")
-                                // : setValues(dataS.cityData.units = "metric");
+                                units === "metric"
+                                    ? setValues((dataS.units = "imperial"))
+                                    : setValues((dataS.units = "metric"));
                             }}
-                            // checked={units === "metric"}
+                            checked={units === "metric"}
                             control={<Switch color="primary" />}
                         ></FormControlLabel>
                         <ResponsiveContainer width="100%" height={300}>

@@ -15,8 +15,6 @@ export const DataProvider = ({ children }) => {
         }));
     };
 
-    console.log("1111111111111111111111111111111111111111");
-    console.log(dataS);
     return (
         <DataContext.Provider value={{ dataS, setValues }}>
             {children}

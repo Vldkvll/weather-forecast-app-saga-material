@@ -3,12 +3,13 @@ import {
     FETCH_FAVORITES_SUCCESS,
     FETCH_FAVORITES_FAIL,
     FETCH_WEATHER_SUCCESS,
+    REMOVE_ERROR_SUCCESS,
 } from "../actions/actionTypes";
 
 const initialState = {
     citiesArr: [],
     citiesData: [],
-    error: [],
+    error: "",
 };
 
 const favouriteWeatherReducer = (state = initialState, action) => {
@@ -28,7 +29,12 @@ const favouriteWeatherReducer = (state = initialState, action) => {
         case FETCH_FAVORITES_FAIL:
             return {
                 ...state,
-                error: [...state.error, action.payload],
+                error: action.payload,
+            };
+        case REMOVE_ERROR_SUCCESS:
+            return {
+                ...state,
+                error: "",
             };
 
         case FETCH_WEATHER_SUCCESS:
@@ -37,9 +43,6 @@ const favouriteWeatherReducer = (state = initialState, action) => {
                     if (element["cityKey"] === action.payload.city) {
                         element.data = action.payload.data;
                     }
-                    console.log(element);
-                    console.log(acc);
-
                     acc = [...acc, element];
                     return acc;
                 },

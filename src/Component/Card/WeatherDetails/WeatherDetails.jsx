@@ -8,6 +8,7 @@ import { Grid } from "@material-ui/core";
 function WeatherDetails({
     data: { description, icon, temp, windSpeed, windTransform },
 }) {
+
     return (
         <div>
             <Grid container justify="center" alignItems="center">

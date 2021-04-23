@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,6 +17,8 @@ import {
 } from "../../Utils/utils";
 import { useData } from "../../DataContext/DataContext";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { removeErrorStart } from "../../Redux/actions/actionCreators";
 
 const useStyles = makeStyles({
     dialogThem: {
@@ -29,12 +31,14 @@ function MainContainer() {
     const classes = useStyles();
 
     const history = useHistory();
+    const error = useSelector((state) => state.favorites.error);
     const { dataS, setValues } = useData();
     const [weatherLocations, setWeatherLocations] = useState(
         readFromLocalStorage
     );
     const [open, setOpen] = useState(false);
-
+    const errorLocation = error.cityKey;
+    const dispatch = useDispatch();
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -47,7 +51,7 @@ function MainContainer() {
         let location = document.getElementsByName("city")[0].value;
         if (!isLetter(location)) {
             alert(
-                "Request must contain only English characters. Enter your request correctly, please. "
+                "Request must contain only English characters. Enter your request correctly, please."
             );
             return;
         } else if (weatherLocations.includes(location)) {
@@ -71,19 +75,45 @@ function MainContainer() {
         saveToLocalStorage(locations);
     };
 
-    const removeLocation = (index) => () => {
+    const removeLocation = (params) => () => {
         updateLocations(
             weatherLocations.filter(
-                (_, locationIndex) => locationIndex !== index
+                (_, locationIndex) => locationIndex !== params
             )
         );
     };
 
+    const DeleteErrorLocation = (params) => {
+        const newWeather = weatherLocations.filter(
+            (item, i) => item !== params
+        );
+        updateLocations(newWeather);
+    };
+
+    if (errorLocation) {
+        setTimeout(
+            (errorLocation) => {
+                DeleteErrorLocation(errorLocation);
+                alert("This location does not exists.");
+            },
+            1000,
+            errorLocation
+        );
+    }
+    const onRemoveError = useCallback(() => dispatch(removeErrorStart()), [
+        dispatch,
+    ]);
+
+    useEffect(() => {
+        if (!errorLocation) return;
+        onRemoveError();
+    }, [errorLocation, onRemoveError]);
+
     const moveItemToFront = (location, description) => () => {
         setValues({
-                location,
-                units: "metric",
-                description,
+            location,
+            units: "metric",
+            description,
         });
         history.push("./weather");
     };

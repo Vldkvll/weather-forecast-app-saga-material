@@ -20,14 +20,10 @@ export function capitalizeString(string) {
 }
 
 export function isLetter(str) {
-    // debugger
-    return str.length >= 2 && str.match(/^[a-zA-Z]*$/i);
+    return str.length >= 2 && str.match(/^[A-Za-zÀ-ÿ\.'*`´’,\- "]{1,34}$/i);
 }
 
 export function getResponseData(response) {
-    // console.log("getResponseData")
-    // console.log(response)
- 
     const [weather] = response.weather || [];
     return {
         temp:
@@ -46,8 +42,6 @@ export function getResponseData(response) {
 export function getCityWeatherDetails(result) {
     return result.list.map((forecast) => ({
         date: forecast.dt_txt.split(" ")[1].split(":")[0] + ":00",
-        //max: forecast.main.temp_max,
-        //min: forecast.main.temp_min
         temp: forecast.main.temp,
         feels: forecast.main.feels_like,
     }));

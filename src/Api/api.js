@@ -31,9 +31,10 @@ export const getWeatherByCityName = async (cityName) => {
                 windSpeed,
             };
         }
-        return { success: false, error: result.statusText };
+        debugger
+        return { error: result.statusText };
     } catch (error) {
-        return { success: false, error: error.message };
+        return { error};
     }
 };
 
@@ -49,6 +50,6 @@ export const getWeatherForecastByCityName = async ({cityName, units}) => {
         })
         .then((response) => response.data)
         .catch((error) => {
-            return { success: false, error: error.message };
+            return {  error: error.message };
         });
 };

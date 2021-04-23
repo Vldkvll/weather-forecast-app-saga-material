@@ -25,7 +25,6 @@ export function fetchWeatherFailed(error) {
 }
 
 export function fetchWeatherEveryHoursStart(payload) {
-    console.log(payload)
     const action = {
         type: types.FETCH_WEATHER_EVERY3HOURS_START,
         payload,
@@ -68,6 +67,20 @@ export const fetchFavoritesFailed = (error) => {
     const action = {
         type: types.FETCH_FAVORITES_FAIL,
         payload: error,
+    };
+    return action;
+};
+
+export const removeErrorStart = () => {
+    const action = {
+        type: types.REMOVE_ERROR_START,
+    };
+    return action;
+};
+
+export const removeErrorSuccess = () => {
+    const action = {
+        type: types.REMOVE_ERROR_SUCCESS,
     };
     return action;
 };
