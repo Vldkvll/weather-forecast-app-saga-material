@@ -58,6 +58,5 @@ function* fetchSingleFav(cityKey) {
 }
 
 export function* removeErrorSaga() {
-    console.error("removeErrorSaga");
     yield put(removeErrorSuccess());
 }
